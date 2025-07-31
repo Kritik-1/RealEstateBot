@@ -6,22 +6,34 @@ from langchain.tools import tool
 from twilio.rest import Client
 
 @tool
-def search_real_estate_listings(location: str, max_budget_lakhs: int) -> str:
+def search_real_estate_listings(location: str, max_budget_lakhs: str) -> str:
     """
-    Searches a database for real estate listings based on a specific location in Jaipur and a maximum budget in Lakhs.
+    Searches a database for real estate listings based on a specific location in Jaipur and a maximum budget.
     """
+    # This new block cleans up the budget input
+    try:
+        # Extracts numbers from the budget string (e.g., "80 lakhs" -> 80)
+        budget_int = int(re.search(r'\d+', max_budget_lakhs).group())
+    except (ValueError, AttributeError):
+        return "Error: The budget provided was not a valid number. Please ask the user for a budget like '80 lakhs'."
+
     results = []
     try:
         with open('jaipur_properties.csv', mode='r', newline='', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                if location.lower() in row['location'].lower() and int(row['price_lakhs']) <= max_budget_lakhs:
+                # Use the cleaned integer budget for comparison
+                if location.lower() in row['location'].lower() and int(row['price_lakhs']) <= budget_int:
                     results.append(
                         f"- Found: {row['property_type']} in {row['location']} for {row['price_lakhs']} Lakhs. Contact {row['contact_person']} at {row['contact_phone']}."
                     )
+
         if not results:
-            return f"No properties found in {location} within the budget of {max_budget_lakhs} Lakhs."
+            return f"No properties found in {location} within the budget of {budget_int} Lakhs."
+
         return "\n".join(results)
+    except FileNotFoundError:
+        return "Error: The property listings database could not be found."
     except Exception as e:
         return f"An error occurred while searching: {e}"
 
