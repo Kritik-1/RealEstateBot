@@ -1,0 +1,10 @@
+id,location,property_type,sqft,price_lakhs,contact_person,contact_phone
+1,Malviya Nagar,2BHK Apartment,1100,58,Mr. Sharma,9829011111
+2,Malviya Nagar,3BHK Apartment,1600,85,Mr. Sharma,9829011111
+3,Vaishali Nagar,3BHK Apartment,1800,95,Ms. Gupta,9829022222
+4,Vaishali Nagar,4BHK Villa,2500,220,Ms. Gupta,9829022222
+5,Jagatpura,2BHK Apartment,1250,45,Mr. Verma,9829033333
+6,Jagatpura,3BHK Villa,2000,110,Mr. Verma,9829033333
+7.Mansarovar,2BHK Apartment,1050,48,Mr. Singh,9829044444
+8,Mansarovar,1BHK Apartment,700,32,Mr. Singh,9829044444
+9,Malviya Nagar,2BHK Apartment,1300,65,Ms. Jain,9829055555
