@@ -1,44 +1,35 @@
 import os
 from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+import json
 
-# Import our new tools
-# Change this line
+# Import your tools
+from tools import search_real_estate_listings, connect_lead_to_agent # Add other tools if needed
 
-from tools import search_real_estate_listings, update_google_sheet, send_email_alert, connect_lead_to_agent
 load_dotenv()
 
 # 1. --- AGENT SETUP ---
-# This prompt is much simpler because the model's tool-calling ability handles the complexity.
-# Find this section and update the system message
+# This prompt is much simpler. The model's native tool-calling ability handles the complexity.
 prompt = ChatPromptTemplate.from_messages(
     [
-        ("system", """You are a real estate assistant. Your primary goal is to help users find properties from a database.
-
-        **Rules:**
-        1.  First, you must collect the user's requirements: name, phone number, location, and budget.
-        2.  Once you have the location and budget, you **MUST** use the `search_real_estate_listings` tool. Do not answer from memory or invent properties.
-        3.  After providing the real listings from the tool, ask the user if they want to be connected to an agent using the `connect_lead_to_agent` tool.
-        4.  Finally, you can offer to save their details using the `update_google_sheet` tool."""),
-        MessagesPlaceholder(variable_name="chat_history"),
+        ("system", "You are a helpful real estate assistant. First, collect necessary information like location and budget. Then, use the search tool to find properties. After presenting the options, you can offer to connect the user with the agent."),
+        MessagesPlaceholder(variable_name="chat_history", optional=True),
         ("user", "{input}"),
         MessagesPlaceholder(variable_name="agent_scratchpad"),
     ]
 )
 
 # Define the tools the agent can use
-tools = [search_real_estate_listings, update_google_sheet, send_email_alert, connect_lead_to_agent]
+tools = [search_real_estate_listings, connect_lead_to_agent]
 
-# Initialize the LLM - We need a model that is good at tool calling
-# Initialize the LLM - We are now using Groq for fast, free inference
-from langchain_groq import ChatGroq
+# Initialize the LLM
+llm = ChatGroq(model="llama3-8b-8192", temperature=0.2, groq_api_key=os.environ.get('GROQ_API_KEY'))
 
-llm = ChatGroq(model="llama3-8b-8192", temperature=0.5, groq_api_key=os.environ['GROQ_API_KEY'])
-# Create the agent
+# Create the more reliable Tool-Calling Agent
 agent = create_tool_calling_agent(llm, tools, prompt)
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 
@@ -55,7 +46,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         chat_histories[user_id] = []
 
     # Invoke the agent
-    response = await agent_executor.ainvoke({ # Use ainvoke for async
+    response = await agent_executor.ainvoke({
         "input": user_input,
         "chat_history": chat_histories[user_id]
     })
@@ -70,7 +61,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.from_user.id
     chat_histories[user_id] = [] # Reset history on /start
-    await update.message.reply_text("Hey there! Thanks for reaching out to Jaipur Dream Homes. To best assist you, could I get your name please?")
+    await update.message.reply_text("Hi! I'm a real estate assistant. How can I help you find a property in Jaipur today?")
 
 def main():
     """Run the bot as a webhook application."""
@@ -80,15 +71,14 @@ def main():
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
-    # IMPORTANT: Use your current Render URL
-    webhook_url = "https://real-estate-bot-ysqn.onrender.com"
-
+    webhook_url = os.environ.get("RENDER_EXTERNAL_URL", "https://your-default-render-url.onrender.com")
+    
     print(f"Starting bot... Listening on port {port}. Webhook should be set to {webhook_url}")
-
-    # This is the simplified server command
+    
     application.run_webhook(
         listen="0.0.0.0",
-        port=port
+        port=port,
+        webhook_url=webhook_url
     )
 
 if __name__ == "__main__":
