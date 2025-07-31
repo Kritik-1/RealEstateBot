@@ -67,22 +67,24 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     """Run the bot as a webhook application."""
+    # Use the PORT environment variable Render provides.
+    port = int(os.environ.get('PORT', 8000))
+
     application = Application.builder().token(os.environ['TELEGRAM_BOT_TOKEN']).build()
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
-    # --- IMPORTANT ---
-    # Make sure this URL exactly matches the one in your ngrok terminal!
-    NGROK_URL = "https://e9fffb115b0d.ngrok-free.app" 
-    
-    # This print statement now runs BEFORE the server starts
-    print(f"Starting bot... It will listen for messages on {NGROK_URL}")
-    
+    # The URL your bot is available at on Render
+    webhook_url = "https://real-estate-bot.onrender.com"
+
+    print(f"Starting bot... Listening on port {port}. Will be linked to {webhook_url}")
+
+    # This starts the server but does NOT set the webhook. We will do that manually.
     application.run_webhook(
         listen="0.0.0.0",
-        port=8000,
-        webhook_url=NGROK_URL
+        port=port,
+        url_path=os.environ['TELEGRAM_BOT_TOKEN'] # Use token as a secure url path
     )
 
 if __name__ == "__main__":
