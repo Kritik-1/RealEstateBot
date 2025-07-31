@@ -67,24 +67,21 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     """Run the bot as a webhook application."""
-    # Use the PORT environment variable Render provides.
     port = int(os.environ.get('PORT', 8000))
-
     application = Application.builder().token(os.environ['TELEGRAM_BOT_TOKEN']).build()
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
-    # The URL your bot is available at on Render
-    webhook_url = "https://real-estate-bot.onrender.com"
+    # IMPORTANT: Use your current Render URL
+    webhook_url = "https://real-estate-bot-ysqn.onrender.com"
 
-    print(f"Starting bot... Listening on port {port}. Will be linked to {webhook_url}")
+    print(f"Starting bot... Listening on port {port}. Webhook should be set to {webhook_url}")
 
-    # This starts the server but does NOT set the webhook. We will do that manually.
+    # This is the simplified server command
     application.run_webhook(
         listen="0.0.0.0",
-        port=port,
-        url_path=os.environ['TELEGRAM_BOT_TOKEN'] # Use token as a secure url path
+        port=port
     )
 
 if __name__ == "__main__":
