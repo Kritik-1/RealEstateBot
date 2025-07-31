@@ -14,9 +14,16 @@ load_dotenv()
 
 # 1. --- AGENT SETUP ---
 # This prompt is much simpler because the model's tool-calling ability handles the complexity.
+# Find this section and update the system message
 prompt = ChatPromptTemplate.from_messages(
     [
-        ("system", "You are a friendly and efficient real estate lead qualification assistant. Your goals are: \n1. Understand a client's needs (name, phone number, location, budget). \n2. Use the `search_real_estate_listings` tool to find properties. \n3. After providing listings, ask the user if they want to be connected to our lead agent on a call. If they agree, use the `connect_lead_to_agent` tool, passing the conversation history to it. \n4. Finally, offer to save the lead's details using your other tools."),
+        ("system", """You are a real estate assistant. Your primary goal is to help users find properties from a database.
+
+        **Rules:**
+        1.  First, you must collect the user's requirements: name, phone number, location, and budget.
+        2.  Once you have the location and budget, you **MUST** use the `search_real_estate_listings` tool. Do not answer from memory or invent properties.
+        3.  After providing the real listings from the tool, ask the user if they want to be connected to an agent using the `connect_lead_to_agent` tool.
+        4.  Finally, you can offer to save their details using the `update_google_sheet` tool."""),
         MessagesPlaceholder(variable_name="chat_history"),
         ("user", "{input}"),
         MessagesPlaceholder(variable_name="agent_scratchpad"),

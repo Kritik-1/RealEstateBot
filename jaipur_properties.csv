@@ -1,10 +1,35 @@
 id,location,property_type,sqft,price_lakhs,contact_person,contact_phone
-1,Malviya Nagar,2BHK Apartment,1100,58,Mr. Sharma,9829011111
-2,Malviya Nagar,3BHK Apartment,1600,85,Mr. Sharma,9829011111
-3,Vaishali Nagar,3BHK Apartment,1800,95,Ms. Gupta,9829022222
-4,Vaishali Nagar,4BHK Villa,2500,220,Ms. Gupta,9829022222
-5,Jagatpura,2BHK Apartment,1250,45,Mr. Verma,9829033333
-6,Jagatpura,3BHK Villa,2000,110,Mr. Verma,9829033333
-7.Mansarovar,2BHK Apartment,1050,48,Mr. Singh,9829044444
-8,Mansarovar,1BHK Apartment,700,32,Mr. Singh,9829044444
-9,Malviya Nagar,2BHK Apartment,1300,65,Ms. Jain,9829055555
+1,Malviya Nagar,2BHK Apartment,1200,65,Mr. Sharma,9829011111
+2,Malviya Nagar,3BHK Apartment,1700,90,Mr. Sharma,9829011111
+3,Malviya Nagar,1BHK Flat,800,40,Ms. Jain,9829055555
+4,Vaishali Nagar,3BHK Luxury Flat,2000,120,Ms. Gupta,9829022222
+5,Vaishali Nagar,2BHK Apartment,1450,80,Ms. Gupta,9829022222
+6,Vaishali Nagar,4BHK Villa,3000,250,Mr. Rathore,9829066666
+7,Jagatpura,2BHK Apartment,1300,50,Mr. Verma,9829033333
+8,Jagatpura,3BHK Apartment,1650,75,Mr. Verma,9829033333
+9,Jagatpura,1BHK Flat,900,35,Mr. Agarwal,982907777s7
+10,Jagatpura,3BHK Villa,2200,125,Mr. Agarwal,9829077777
+11,Mansarovar,2BHK Apartment,1100,52,Mr. Singh,9829044444
+12,Mansarovar,3BHK Flat,1400,68,Mr. Singh,9829044444
+13,Mansarovar,1BHK Apartment,750,35,Mr. Choudhary,9829088888
+14,C-Scheme,3BHK Premium Flat,2400,210,Mr. Khandelwal,9829099999
+15,C-Scheme,4BHK Penthouse,3500,400,Mr. Khandelwal,9829099999
+16,C-Scheme,2BHK Apartment,1500,130,Ms. Surana,9829012345
+17,Civil Lines,4BHK Independent House,4000,550,Mr. Gehlot,9829054321
+18,Civil Lines,3BHK Luxury Apartment,2800,280,Mr. Gehlot,9829054321
+19,Civil Lines,5BHK Villa,5000,700,Mr. Lodha,9829067890
+20,Pratap Nagar,2BHK RHB Flat,950,38,Mr. Yadav,9829011223
+21,Pratap Nagar,1BHK Apartment,650,28,Mr. Yadav,9829011223
+22,Pratap Nagar,3BHK Apartment,1300,55,Ms. Shekhawat,9829022334
+23,Bani Park,3BHK Flat,1900,115,Mr. Pareek,9829033445
+24,Bani Park,2BHK Apartment,1300,75,Mr. Pareek,9829033445
+25,Bani Park,4BHK Independent Floor,2600,200,Mr. Ajmera,9829044556
+26,Vidhyadhar Nagar,2BHK Apartment,1200,48,Mr. Gupta,9829055667
+27,Vidhyadhar Nagar,3BHK Flat,1500,65,Mr. Gupta,9829055667
+28,Vidhyadhar Nagar,1BHK Flat,700,30,Mr. Kumawat,9829066778
+29,Jhotwara,2BHK Apartment,1000,42,Mr. Saini,9829077889
+30,Jhotwara,3BHK Independent House,1800,88,Mr. Saini,9829077889
+31,Jhotwara,2BHK Flat,1150,45,Ms. Poonia,9829088990
+32,Sodala,2BHK Apartment,950,40,Ms. Meena,9829010101
+33,Sodala,3BHK Apartment,1350,62,Ms. Meena,9829010101
+34,Sodala,1BHK Flat,600,26,Mr. Jangid,9829020202
