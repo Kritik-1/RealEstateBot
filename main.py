@@ -38,6 +38,8 @@ chat_histories = {}
 
 # 2. --- TELEGRAM BOT SETUP ---
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    print(f"--- handle_message triggered by user {update.message.from_user.id} ---")
     user_id = update.message.from_user.id
     user_input = update.message.text
 
