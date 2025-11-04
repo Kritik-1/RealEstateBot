@@ -1,0 +1,9 @@
+langchain
+langchain-groq
+python-telegram-bot[webhooks]
+twilio
+gspread
+oauth2client
+python-dotenv
+uvicorn
+starlette

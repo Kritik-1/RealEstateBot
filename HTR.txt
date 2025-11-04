@@ -1,0 +1,30 @@
+## 2. Start the Bot Server (Terminal 1)
+Activate your virtual environment:
+
+PowerShell
+
+.\venv\Scripts\activate
+Start the Uvicorn server:
+
+PowerShell
+
+uvicorn main:app --port 5000
+Leave this terminal running. It should say Uvicorn running on http://127.0.0.1:5000.
+
+
+
+## 3. Start the Public Tunnel (Terminal 2)
+Run ngrok to create a public URL that connects to your bot server:
+
+PowerShell
+
+ngrok http 5000
+Leave this terminal running as well. It will show you a Forwarding URL that looks like https://random-string.ngrok-free.app.
+
+## 4. Connect Telegram to Your Bot
+Copy the https://... forwarding URL from the ngrok terminal.
+
+Set the webhook one last time by pasting that URL into the template below and running it in your web browser:
+
+https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook?url=<YOUR_NEW_NGROK_URL>
+After that, your bot will be live and ready to chat. Just remember you have to keep both terminals running for it to stay online.
